@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>grpc</module>
+        <module>avro</module>
     </modules>
 
     <properties>
