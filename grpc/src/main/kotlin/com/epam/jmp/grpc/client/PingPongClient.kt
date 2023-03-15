@@ -1,29 +1,25 @@
-package com.epam.jmp.grpc.client;
+package com.epam.jmp.grpc.client
 
-import com.epam.jmp.grpc.PingPongRequest;
-import com.epam.jmp.grpc.PingPongResponse;
-import com.epam.jmp.grpc.PingPongServiceGrpc;
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
+import com.epam.jmp.grpc.PingPongRequest
+import com.epam.jmp.grpc.PingPongServiceGrpc
+import io.grpc.ManagedChannelBuilder
 
-public class PingPongClient {
-    public static void main(String[] args) {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8081)
-                .usePlaintext()
-                .build();
+fun main() {
+    val channel = ManagedChannelBuilder.forAddress("localhost", 8081)
+        .usePlaintext()
+        .build()
 
-        PingPongServiceGrpc.PingPongServiceBlockingStub stub = PingPongServiceGrpc.newBlockingStub(channel);
+    val stub = PingPongServiceGrpc.newBlockingStub(channel)
 
-        var pingRequest = PingPongRequest.newBuilder().setMessage("ping").build();
-        PingPongResponse pongResponse = stub.ping(pingRequest);
-        System.out.println(pongResponse.getMessage());
+    val pingRequest = PingPongRequest.newBuilder().setMessage("ping").build()
+    val pongResponse = stub.ping(pingRequest)
+    println(pongResponse.message)
 
-        var pongRequest = PingPongRequest.newBuilder().setMessage("pong").build();
-        PingPongResponse pingResponse = stub.ping(pongRequest);
-        System.out.println(pingResponse.getMessage());
+    val pongRequest = PingPongRequest.newBuilder().setMessage("pong").build()
+    val pingResponse = stub.ping(pongRequest)
+    println(pingResponse.message)
 
-        var invalidRequest = PingPongRequest.newBuilder().setMessage("pang").build();
-        PingPongResponse errorResponse = stub.ping(invalidRequest);
-        System.out.println(errorResponse.getMessage());
-    }
+    val invalidRequest = PingPongRequest.newBuilder().setMessage("pang").build()
+    val errorResponse = stub.ping(invalidRequest)
+    println(errorResponse.message)
 }
